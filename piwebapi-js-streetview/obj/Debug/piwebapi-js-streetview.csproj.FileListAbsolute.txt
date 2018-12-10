@@ -1,0 +1,7 @@
+C:\Users\mabotero\source\repos\piwebapi-js-streetview\piwebapi-js-streetview\bin\piwebapi-js-streetview.dll.config
+C:\Users\mabotero\source\repos\piwebapi-js-streetview\piwebapi-js-streetview\bin\piwebapi-js-streetview.dll
+C:\Users\mabotero\source\repos\piwebapi-js-streetview\piwebapi-js-streetview\bin\piwebapi-js-streetview.pdb
+C:\Users\mabotero\source\repos\piwebapi-js-streetview\piwebapi-js-streetview\obj\Debug\piwebapi-js-streetview.csprojAssemblyReference.cache
+C:\Users\mabotero\source\repos\piwebapi-js-streetview\piwebapi-js-streetview\obj\Debug\piwebapi-js-streetview.csproj.CoreCompileInputs.cache
+C:\Users\mabotero\source\repos\piwebapi-js-streetview\piwebapi-js-streetview\obj\Debug\piwebapi-js-streetview.dll
+C:\Users\mabotero\source\repos\piwebapi-js-streetview\piwebapi-js-streetview\obj\Debug\piwebapi-js-streetview.pdb
