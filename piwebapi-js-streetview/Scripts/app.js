@@ -2,6 +2,7 @@
 var marker;
 var panorama;
 var geocoder;
+var baseServiceUrl = "https://maboterow7/piwebapi/";
 
 var updatePanoramaDOM = function () {
     $("#latitude").text(panorama.position.lat);    
@@ -13,46 +14,68 @@ var updatePanoramaDOM = function () {
     marker.setPosition(panorama.position);
 };
 
+var authSuccessCallBack = function (data, statusMessage, statusObj) {
+    if (statusObj.status == "200") {
+        $("#auth-view-mode").hide();
+        $("#map-view-mode").show();
+
+        var indralocation = { lat: 4.805626, lng: -75.690198 };
+
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: indralocation,
+            zoom: 16,
+            streetVireControl: false
+        });
+
+        marker = new google.maps.Marker({
+            position: indralocation,
+            map: map
+        });
+
+        panorama = new google.maps.StreetViewPanorama(document.getElementById("pano"), {
+            position: indralocation,
+            pov: {
+                heading: 0,
+                pitch: 0,
+                zoom: 1
+            }
+        });
+
+        geocoder = new google.maps.Geocoder();
+
+        panorama.addListener("pano_changed", function () {
+            updatePanoramaDOM();
+        });
+        panorama.addListener("links_changed", function () {
+            updatePanoramaDOM();
+        });
+        panorama.addListener("position_changed", function () {
+            updatePanoramaDOM();
+        });
+        panorama.addListener("pov_changed", function () {
+            updatePanoramaDOM();
+        });
+
+        $("#stop-btn").prop("disabled", true);
+    }
+};
+
+var authErrorCallBack = function (data) {
+    if (data.status == "401") {
+        alert("Invalid User Name and Passowrd")
+    } else {
+        alert("Error during validation" + data.status)
+    }
+};
+
 $("#go-to-map-btn").click(function () {
-    $("#auth-view-mode").hide();
-    $("#map-view-mode").show();
+    var username = $("#username").val();
+    var password = $("#password").val();    
 
-    var indralocation = { lat: 4.805626, lng: -75.690198 };
-
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: indralocation,
-        zoom: 16,
-        streetVireControl: false
-    });
-
-    marker = new google.maps.Marker({
-        position: indralocation,
-        map: map
-    });
-
-    panorama = new google.maps.StreetViewPanorama(document.getElementById("pano"),{
-        position: indralocation,
-        pov: {
-            heading: 0,
-            pitch: 0,
-            zoom: 1
-        }
-    });
-
-    geocoder = new google.maps.Geocoder();
-
-    panorama.addListener("pano_changed", function () {
-        updatePanoramaDOM();
-    });
-    panorama.addListener("links_changed", function () {
-        updatePanoramaDOM();
-    });
-    panorama.addListener("position_changed", function () {
-        updatePanoramaDOM();
-    });
-    panorama.addListener("pov_changed", function () {
-        updatePanoramaDOM();
-    });
+    piwebapi.SetBaseUrl(baseServiceUrl);
+    piwebapi.SetCredentials(username, password);
+    piwebapi.Authorize(authSuccessCallBack, authErrorCallBack);
+    
 });
 $("#search-address-btn").click(function () {
     var address = document.getElementById("address").value;
@@ -76,5 +99,22 @@ $("#search-address-btn").click(function () {
 $("#back-btn").click(function () {
     $("#auth-view-mode").show();
     $("#map-view-mode").hide();
+    piwebapi.Reset();
+    $("#username").val("");
+    $("#password").val("");
 });
+
+$("#start-btn").click(function () {
+    piwebapi.CreateEventFrame();
+    $("#start-btn").prop("disabled", true);
+    $("#stop-btn").prop("disabled", false);
+});
+
+$("#stop-btn").click(function () {
+    piwebapi.CloseEventFrame();
+    $("#start-btn").prop("disabled", false);
+    $("#stop-btn").prop("disabled", true);
+});
+
+
 
