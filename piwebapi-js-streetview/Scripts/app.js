@@ -3,8 +3,9 @@ var marker;
 var panorama;
 var geocoder;
 var baseServiceUrl = "https://maboterow7/piwebapi/";
+var recordStarted = false;
 
-var updatePanoramaDOM = function () {
+var updatePanoramaDOM = function () {    
     $("#latitude").text(panorama.position.lat);    
     $("#longitude").text(panorama.position.lng);
     $("#heading").text(panorama.pov.heading);
@@ -12,6 +13,15 @@ var updatePanoramaDOM = function () {
     $("#zoom").text(panorama.pov.zoom);
 
     marker.setPosition(panorama.position);
+
+    var tmp = { lat: panorama.position.lat };
+
+    if (recordStarted) {
+        //console.log(tmp.lat);
+        //console.log(panorama.position.lat);
+        piwebapi.SendValues(panorama);
+    }
+
 };
 
 var authSuccessCallBack = function (data, statusMessage, statusObj) {
@@ -108,12 +118,14 @@ $("#start-btn").click(function () {
     piwebapi.CreateEventFrame();
     $("#start-btn").prop("disabled", true);
     $("#stop-btn").prop("disabled", false);
+    recordStarted = true;
 });
 
 $("#stop-btn").click(function () {
     piwebapi.CloseEventFrame();
     $("#start-btn").prop("disabled", false);
     $("#stop-btn").prop("disabled", true);
+    recordStarted = false;
 });
 
 
