@@ -51,8 +51,8 @@ var piwebapi = (function () {
     var SendValuesToPI = function (panorama) {
         var data = [];
         
-        console.log("attributesWebID");
-        console.log(attributesWebId);
+        //console.log("attributesWebID");
+        //console.log(attributesWebId);
 
         for (var key in attributesWebId) {
             var obj = {};
@@ -62,27 +62,28 @@ var piwebapi = (function () {
             var newValue = {};
             newValue.Timestamp = "*";
             if (key == "Latitude") {
-                console.log("Lat: " + panorama.position.lat());
+                //console.log("Lat: " + panorama.position.lat());
                 newValue.Value = panorama.position.lat();
             }
             else if (key == "Longitude") {
-                console.log(panorama.position.lng());
+                //console.log(panorama.position.lng());
                 newValue.Value = panorama.position.lng();
             }
             else if (key == "Heading") {
-                console.log(panorama.pov.heading);
+                //console.log(panorama.pov.heading);
                 newValue.Value = panorama.pov.heading;
             }
             else if (key == "Pitch") {
-                console.log(panorama.pov.pitch);
+                //console.log(panorama.pov.pitch);
                 newValue.Value = panorama.pov.pitch;
             }
             else if (key == "Zoom") {
-                console.log(panorama.pov.zoom);
+                //console.log(panorama.pov.zoom);
                 newValue.Value = panorama.pov.zoom;
             }
 
-            console.log(newValue);
+            //console.log(newValue);
+
             obj.Items.push(newValue);
             data.push(obj);
         }
@@ -91,8 +92,8 @@ var piwebapi = (function () {
         var url = basePIWebAPIUrl + "streamsets/" + currentEFWebId + "/recorded";        
         var ajax = processJsonContent(url, "POST", postData, null, null);
 
-        console.log("Post Data: ")
-        console.log(postData);
+        //console.log("Post Data: ")
+        //console.log(postData);
 
         $.when(ajax).fail(function () {
             console.log("Cannot Write data to AF Attributes");
