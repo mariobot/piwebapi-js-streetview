@@ -12,12 +12,9 @@ var updatePanoramaDOM = function () {
     $("#pitch").text(panorama.pov.pitch);
     $("#zoom").text(panorama.pov.zoom);
 
-    marker.setPosition(panorama.position);
+    marker.setPosition(panorama.position);    
 
-    var tmp = { lat: panorama.position.lat };
-
-    if (recordStarted) {
-        //console.log(tmp.lat);
+    if (recordStarted) {        
         //console.log(panorama.position.lat);
         piwebapi.SendValues(panorama);
     }

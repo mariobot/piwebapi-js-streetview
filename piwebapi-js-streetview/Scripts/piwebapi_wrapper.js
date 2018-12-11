@@ -100,7 +100,7 @@ var piwebapi = (function () {
         });
 
         $.when(ajax).done(function () {
-
+            console.log("Updated AF Attributes");
         });
     };
 
@@ -205,16 +205,15 @@ var piwebapi = (function () {
                         attributesWebId = {};
                         for (var i = 0; i < data.Items.length; i++) {                            
                             attributesWebId[data.Items[i].Name] = data.Items[i].WebId;
-
                         }                        
                         // Send values to attributes                                                
                         SendValuesToPI(panorama);
                     });
-
                 });
-            } else {
+            }
+            else {
                 SendValuesToPI(panorama);
-            }// END IF
+            }
         }
     };
 })();
